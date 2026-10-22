@@ -1,7 +1,6 @@
 {
   "title": "Front-end stack at a glance",
   "subtitle": "Overview from tokens to pages",
-  "accent": "#c2410c",
   "tldr": "Each layer builds on the one below it. Change a low layer and everything above updates.",
   "sections": [
     {"title": "The layers", "type": "cards", "items": [

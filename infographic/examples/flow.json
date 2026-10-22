@@ -1,7 +1,6 @@
 {
   "title": "How a page reaches the browser",
   "subtitle": "Step-by-step explanation with a flow",
-  "accent": "#7c3aed",
   "sections": [
     {"title": "The request path", "type": "flow", "items": [
       {"title": "DNS", "text": "Turn the name into an address."},

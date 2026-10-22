@@ -1,7 +1,6 @@
 {
   "title": "Weekly traffic snapshot",
   "subtitle": "Basic data: numbers, chart, bars and a table",
-  "accent": "#2563eb",
   "tldr": "12,400 visits this week. Midweek was the busiest. Weekends were about half of the peak.",
   "stats": [
     {"value": "12.4k", "label": "visits"},

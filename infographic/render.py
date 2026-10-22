@@ -10,7 +10,8 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_ACCENT = "#4f46e5"
+DEFAULT_ACCENT = "#305e18"  # moss green
+DEFAULT_ACCENT_DARK = "#7fb044"  # leaf green, used for the default accent in dark mode
 TONES = {"good", "bad", "warn", "info", "neutral"}
 NUM = re.compile(
     r"^[~<>≈$€£+\-−]?\s*\d[\d.,]*(:\d{2})?\s*(%|x|k|m|ms|s|kb|mb|gb)?$",
@@ -229,9 +230,14 @@ def render(data):
     accent = str(data.get("accent", DEFAULT_ACCENT))
     if not re.fullmatch(r"#[0-9a-fA-F]{6}", accent):
         accent = DEFAULT_ACCENT
+    if accent.lower() == DEFAULT_ACCENT:
+        accent_dark = DEFAULT_ACCENT_DARK
+    else:
+        accent_dark = "color-mix(in srgb,%s 55%%,#fff)" % accent
     template = (HERE / "template.html").read_text(encoding="utf-8")
     return (
         template.replace("{{TITLE}}", e(data.get("title", "Summary")))
+        .replace("{{ACCENT_DARK}}", accent_dark)
         .replace("{{ACCENT}}", accent)
         .replace("{{BODY}}", build_body(data))
     )
