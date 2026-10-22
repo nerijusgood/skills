@@ -11,71 +11,74 @@
           "title": "Design tokens",
           "text": "Colors, spacing, type. The raw decisions.",
           "tag": "Base",
-          "tone": "neutral"
+          "tone": "neutral",
+          "icon": "palette"
         },
         {
           "title": "Components",
           "text": "Buttons, cards, forms. Built from tokens.",
           "tag": "Shared",
-          "tone": "good"
+          "tone": "good",
+          "icon": "puzzle-piece"
         },
         {
           "title": "Pages",
           "text": "Components put together for one screen.",
           "tag": "Product",
-          "tone": "info"
+          "tone": "info",
+          "icon": "browser"
         },
         {
           "title": "Data layer",
           "text": "APIs, caching, loading and error states.",
           "tag": "Logic",
-          "tone": "warn"
+          "tone": "warn",
+          "icon": "database"
         },
         {
           "title": "Tooling",
           "text": "Build, tests, lint, deploy previews.",
           "tag": "Support",
-          "tone": "neutral"
+          "tone": "neutral",
+          "icon": "wrench"
         },
         {
           "title": "AI helpers",
           "text": "Skills and rules that keep new code on pattern.",
           "tag": "Enablement",
-          "tone": "good"
+          "tone": "good",
+          "icon": "sparkle"
         }
       ]
     },
     {
-      "title": "Who owns what",
-      "type": "table",
-      "columns": [
-        "Layer",
-        "Owner",
-        "Changes"
-      ],
-      "rows": [
-        [
-          "Tokens",
-          "Design system team",
-          "Rare"
-        ],
-        [
-          "Components",
-          "Design system team",
-          "Weekly"
-        ],
-        [
-          "Pages",
-          "Product teams",
-          "Daily"
-        ],
-        [
-          "Tooling",
-          "Platform",
-          "Monthly"
-        ]
+      "title": "Who to ask",
+      "type": "people",
+      "doodle": "mug",
+      "items": [
+        {
+          "name": "Maja",
+          "role": "Design tokens",
+          "text": "Colors, spacing and type."
+        },
+        {
+          "name": "Jonas",
+          "role": "Components",
+          "text": "The shared component library."
+        },
+        {
+          "name": "Sofie",
+          "role": "Product pages",
+          "text": "Page layouts and content."
+        },
+        {
+          "name": "Lars",
+          "role": "Platform",
+          "text": "Build, tests and deploys."
+        }
       ]
     }
   ],
-  "footer": "Sample content for the template demo"
+  "footer": "Sample content and names for the template demo",
+  "doodle": "plant"
 }

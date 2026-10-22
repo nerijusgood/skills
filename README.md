@@ -4,7 +4,7 @@ My personal Claude skills. One folder per skill, each with a `SKILL.md`.
 
 | Skill | What it does |
 | --- | --- |
-| [`infographic`](infographic/) | Turns an answer into a quick-scan, self-contained HTML infographic. Claude writes a small JSON, a script renders it. |
+| [`infographic`](infographic/) | Turns an answer into a calm, light, quick-scan HTML infographic with icons, doodles and avatars. Claude writes a small JSON, a script renders it. |
 
 ## Install
 
@@ -20,5 +20,7 @@ ln -s "$(pwd)/infographic" ~/.claude/skills/infographic
 
 ```bash
 cd infographic
-python3 render.py example.json out.html && open out.html
+python3 render.py examples/overview.json out.html && open out.html
 ```
+
+Third-party asset licenses are listed in [`infographic/THIRD_PARTY.md`](infographic/THIRD_PARTY.md).

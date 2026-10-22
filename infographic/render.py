@@ -3,6 +3,7 @@
 
 Usage:  python3 render.py data.json [out.html]     (use - to read stdin)
 """
+import hashlib
 import html
 import json
 import re
@@ -10,8 +11,13 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_ACCENT = "#4f6b43"  # calm moss green
-DEFAULT_ACCENT_DARK = "#a9b8a1"  # sage mist, used for the default accent in dark mode
+sys.path.insert(0, str(HERE))
+
+from doodles import DOODLES  # noqa: E402  (original doodles)
+from icons import ICONS  # noqa: E402  (Phosphor icons, MIT)
+
+DEFAULT_ACCENT = "#4d5f2b"  # calm olive moss
+DEFAULT_ACCENT_DARK = "#b7c48f"  # soft olive sage, used for the default accent in dark mode
 TONES = {"good", "bad", "warn", "info", "neutral"}
 NUM = re.compile(
     r"^[~<>≈$€£+\-−]?\s*\d[\d.,]*(:\d{2})?\s*(%|x|k|m|ms|s|kb|mb|gb)?$",
@@ -22,6 +28,9 @@ ARROW = (
     '<path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" '
     'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 )
+
+_AVATARS = None
+_USED_AVATARS = set()
 
 
 def e(value):
@@ -41,12 +50,62 @@ def tone_of(obj, default="neutral"):
     return tone if tone in TONES else default
 
 
+# ---------- illustrations ----------
+
+def icon_html(name, cls="ico"):
+    """Phosphor icon in a soft rounded tile. Unknown short text (an emoji) is shown as text."""
+    if not name:
+        return ""
+    if name in ICONS:
+        return (
+            '<span class="%s" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor">%s</svg></span>'
+            % (cls, ICONS[name])
+        )
+    if len(str(name)) <= 3:
+        return '<span class="%s" aria-hidden="true">%s</span>' % (cls, e(name))
+    print("warning: unknown icon %r skipped" % name, file=sys.stderr)
+    return ""
+
+
+def doodle_html(name, cls):
+    if not name:
+        return ""
+    if name not in DOODLES:
+        print("warning: unknown doodle %r skipped" % name, file=sys.stderr)
+        return ""
+    return '<svg class="doodle %s" viewBox="0 0 160 160" aria-hidden="true">%s</svg>' % (cls, DOODLES[name])
+
+
+def avatars():
+    global _AVATARS
+    if _AVATARS is None:
+        path = HERE / "avatars.json"
+        _AVATARS = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+    return _AVATARS
+
+
+def avatar_for(seed):
+    """Same name gives the same face. Different names on one page get different faces."""
+    pool = avatars()
+    if not pool:
+        return ""
+    start = int(hashlib.md5(str(seed).strip().lower().encode("utf-8")).hexdigest(), 16) % len(pool)
+    for step in range(len(pool)):
+        i = (start + step) % len(pool)
+        if i not in _USED_AVATARS:
+            _USED_AVATARS.add(i)
+            return pool[i]
+    return pool[start]
+
+
+# ---------- blocks ----------
+
 def stats_html(stats):
     cells = []
     for s in stats or []:
         cells.append(
-            '<div class="stat"><div class="stat-v">%s</div>'
-            '<div class="stat-l">%s</div></div>' % (e(s.get("value")), e(s.get("label")))
+            '<div class="stat">%s<div class="stat-v">%s</div><div class="stat-l">%s</div></div>'
+            % (icon_html(s.get("icon")), e(s.get("value")), e(s.get("label")))
         )
     return '<section class="stats">%s</section>' % "".join(cells) if cells else ""
 
@@ -54,15 +113,12 @@ def stats_html(stats):
 def cards_html(sec):
     out = []
     for it in sec.get("items", []):
-        icon = ""
-        if it.get("icon"):
-            icon = '<span class="icon" aria-hidden="true">%s</span>' % e(it["icon"])
         tag = ""
         if it.get("tag"):
             tag = '<span class="tag tone-%s">%s</span>' % (tone_of(it), e(it["tag"]))
         out.append(
             '<article class="card">%s<h3>%s</h3>%s<p>%s</p></article>'
-            % (icon, e(it.get("title")), tag, e(it.get("text")))
+            % (icon_html(it.get("icon")), e(it.get("title")), tag, e(it.get("text")))
         )
     return '<div class="grid">%s</div>' % "".join(out)
 
@@ -72,8 +128,23 @@ def points_html(sec):
     for it in sec.get("items", []):
         detail = '<span>%s</span>' % e(it["text"]) if it.get("text") else ""
         tone = (" tone-" + it["tone"]) if it.get("tone") in TONES else ""
-        out.append('<div class="pt%s"><b>%s</b>%s</div>' % (tone, e(it.get("title")), detail))
+        out.append(
+            '<div class="pt%s">%s<div><b>%s</b>%s</div></div>'
+            % (tone, icon_html(it.get("icon"), "ico sm"), e(it.get("title")), detail)
+        )
     return '<div class="points">%s</div>' % "".join(out)
+
+
+def people_html(sec):
+    out = []
+    for it in sec.get("items", []):
+        name = it.get("name", "")
+        src = avatar_for(it.get("avatar", name))
+        img = '<img class="av" src="%s" alt="" width="56" height="56">' % e(src) if src else ""
+        role = '<span>%s</span>' % e(it["role"]) if it.get("role") else ""
+        text = '<p>%s</p>' % e(it["text"]) if it.get("text") else ""
+        out.append('<div class="person">%s<div><b>%s</b>%s%s</div></div>' % (img, e(name), role, text))
+    return '<div class="people">%s</div>' % "".join(out)
 
 
 def steps_html(sec):
@@ -178,8 +249,9 @@ def list_html(sec):
 
 def callout_html(c):
     title = '<strong>%s</strong>' % e(c["title"]) if c.get("title") else ""
-    return '<aside class="callout tone-%s">%s<span>%s</span></aside>' % (
+    return '<aside class="callout tone-%s">%s<div>%s<span>%s</span></div></aside>' % (
         tone_of(c, "info"),
+        icon_html(c.get("icon"), "ico sm"),
         title,
         e(c.get("text")),
     )
@@ -188,6 +260,7 @@ def callout_html(c):
 RENDERERS = {
     "cards": cards_html,
     "points": points_html,
+    "people": people_html,
     "steps": steps_html,
     "flow": flow_html,
     "compare": compare_html,
@@ -206,15 +279,21 @@ def section_html(sec):
     if fn is None:
         print("warning: unknown section type %r skipped" % kind, file=sys.stderr)
         return ""
-    heading = '<h2>%s</h2>' % e(sec["title"]) if sec.get("title") else ""
+    heading = ""
+    if sec.get("title"):
+        heading = '<div class="h2row"><h2>%s</h2>%s</div>' % (
+            e(sec["title"]),
+            doodle_html(sec.get("doodle"), "doodle-sm"),
+        )
     return '<section class="block">%s%s</section>' % (heading, fn(sec))
 
 
 def build_body(data):
-    parts = ['<header><h1>%s</h1>' % e(data.get("title", "Summary"))]
-    if data.get("subtitle"):
-        parts.append('<p class="sub">%s</p>' % e(data["subtitle"]))
-    parts.append("</header>")
+    sub = '<p class="sub">%s</p>' % e(data["subtitle"]) if data.get("subtitle") else ""
+    parts = [
+        '<header class="hero"><div class="hero-text"><h1>%s</h1>%s</div>%s</header>'
+        % (e(data.get("title", "Summary")), sub, doodle_html(data.get("doodle"), "doodle-hero"))
+    ]
     if data.get("tldr"):
         parts.append('<div class="tldr"><small>In short</small>%s</div>' % e(data["tldr"]))
     parts.append(stats_html(data.get("stats")))
@@ -227,6 +306,7 @@ def build_body(data):
 
 
 def render(data):
+    _USED_AVATARS.clear()
     accent = str(data.get("accent", DEFAULT_ACCENT))
     if not re.fullmatch(r"#[0-9a-fA-F]{6}", accent):
         accent = DEFAULT_ACCENT
@@ -234,12 +314,13 @@ def render(data):
         accent_dark = DEFAULT_ACCENT_DARK
     else:
         accent_dark = "color-mix(in srgb,%s 55%%,#fff)" % accent
+    body = build_body(data)
     template = (HERE / "template.html").read_text(encoding="utf-8")
     return (
         template.replace("{{TITLE}}", e(data.get("title", "Summary")))
         .replace("{{ACCENT_DARK}}", accent_dark)
         .replace("{{ACCENT}}", accent)
-        .replace("{{BODY}}", build_body(data))
+        .replace("{{BODY}}", body)
     )
 
 
