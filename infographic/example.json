@@ -1,0 +1,41 @@
+{
+  "title": "Why a skill beats a prompt rule",
+  "subtitle": "How to get infographic answers without paying tokens in every chat",
+  "tldr": "A skill loads only when you ask for it. A global rule loads in every chat.",
+  "stats": [
+    {"value": "~100", "label": "tokens idle (description only)"},
+    {"value": "0", "label": "extra tokens in chats that skip it"},
+    {"value": "1 file", "label": "self-contained HTML output"}
+  ],
+  "sections": [
+    {
+      "title": "Your options",
+      "type": "cards",
+      "items": [
+        {"title": "Skill", "text": "Loads full instructions only when triggered.", "tag": "Recommended", "tone": "good"},
+        {"title": "CLAUDE.md / preferences", "text": "Loaded in every chat, so you pay every time.", "tag": "Always on", "tone": "warn"},
+        {"title": "Output style", "text": "Changes all replies, not just some.", "tag": "Too broad", "tone": "neutral"},
+        {"title": "Hook", "text": "Fully automatic, but more setup.", "tag": "Later", "tone": "info"}
+      ]
+    },
+    {
+      "title": "How the skill stays cheap",
+      "type": "steps",
+      "items": [
+        {"title": "Claude writes a short JSON", "text": "Title, key points, numbers. No HTML."},
+        {"title": "A script fills the template", "text": "Same polished design every time."},
+        {"title": "You get one HTML file", "text": "Open it, or publish it to share."}
+      ]
+    },
+    {
+      "title": "Trade-offs",
+      "type": "compare",
+      "columns": [
+        {"title": "Good", "tone": "good", "points": ["Tiny cost per use", "Consistent design", "Works everywhere you install it"]},
+        {"title": "Watch out", "tone": "warn", "points": ["You must ask for it (or let the description trigger it)", "Needs Python 3 for the script"]}
+      ]
+    }
+  ],
+  "callout": {"tone": "info", "title": "Tip", "text": "Say \"infographic this\" after any answer."},
+  "footer": "Generated with the infographic skill"
+}
