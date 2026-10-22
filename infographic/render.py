@@ -10,8 +10,8 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_ACCENT = "#305e18"  # moss green
-DEFAULT_ACCENT_DARK = "#7fb044"  # leaf green, used for the default accent in dark mode
+DEFAULT_ACCENT = "#4f6b43"  # calm moss green
+DEFAULT_ACCENT_DARK = "#a9b8a1"  # sage mist, used for the default accent in dark mode
 TONES = {"good", "bad", "warn", "info", "neutral"}
 NUM = re.compile(
     r"^[~<>≈$€£+\-−]?\s*\d[\d.,]*(:\d{2})?\s*(%|x|k|m|ms|s|kb|mb|gb)?$",

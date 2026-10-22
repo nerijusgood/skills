@@ -3,20 +3,79 @@
   "subtitle": "Overview from tokens to pages",
   "tldr": "Each layer builds on the one below it. Change a low layer and everything above updates.",
   "sections": [
-    {"title": "The layers", "type": "cards", "items": [
-      {"icon": "🎨", "title": "Design tokens", "text": "Colors, spacing, type. The raw decisions.", "tag": "Base", "tone": "neutral"},
-      {"icon": "🧩", "title": "Components", "text": "Buttons, cards, forms. Built from tokens.", "tag": "Shared", "tone": "good"},
-      {"icon": "📄", "title": "Pages", "text": "Components put together for one screen.", "tag": "Product", "tone": "info"},
-      {"icon": "🔌", "title": "Data layer", "text": "APIs, caching, loading and error states.", "tag": "Logic", "tone": "warn"},
-      {"icon": "🛠️", "title": "Tooling", "text": "Build, tests, lint, deploy previews.", "tag": "Support", "tone": "neutral"},
-      {"icon": "🤖", "title": "AI helpers", "text": "Skills and rules that keep new code on pattern.", "tag": "Enablement", "tone": "good"}
-    ]},
-    {"title": "Who owns what", "type": "table", "columns": ["Layer", "Owner", "Changes"], "rows": [
-      ["Tokens", "Design system team", "Rare"],
-      ["Components", "Design system team", "Weekly"],
-      ["Pages", "Product teams", "Daily"],
-      ["Tooling", "Platform", "Monthly"]
-    ]}
+    {
+      "title": "The layers",
+      "type": "cards",
+      "items": [
+        {
+          "title": "Design tokens",
+          "text": "Colors, spacing, type. The raw decisions.",
+          "tag": "Base",
+          "tone": "neutral"
+        },
+        {
+          "title": "Components",
+          "text": "Buttons, cards, forms. Built from tokens.",
+          "tag": "Shared",
+          "tone": "good"
+        },
+        {
+          "title": "Pages",
+          "text": "Components put together for one screen.",
+          "tag": "Product",
+          "tone": "info"
+        },
+        {
+          "title": "Data layer",
+          "text": "APIs, caching, loading and error states.",
+          "tag": "Logic",
+          "tone": "warn"
+        },
+        {
+          "title": "Tooling",
+          "text": "Build, tests, lint, deploy previews.",
+          "tag": "Support",
+          "tone": "neutral"
+        },
+        {
+          "title": "AI helpers",
+          "text": "Skills and rules that keep new code on pattern.",
+          "tag": "Enablement",
+          "tone": "good"
+        }
+      ]
+    },
+    {
+      "title": "Who owns what",
+      "type": "table",
+      "columns": [
+        "Layer",
+        "Owner",
+        "Changes"
+      ],
+      "rows": [
+        [
+          "Tokens",
+          "Design system team",
+          "Rare"
+        ],
+        [
+          "Components",
+          "Design system team",
+          "Weekly"
+        ],
+        [
+          "Pages",
+          "Product teams",
+          "Daily"
+        ],
+        [
+          "Tooling",
+          "Platform",
+          "Monthly"
+        ]
+      ]
+    }
   ],
   "footer": "Sample content for the template demo"
 }

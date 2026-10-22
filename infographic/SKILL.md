@@ -51,7 +51,7 @@ All keys are optional except `title`.
 ```
 
 - `tone` is one of: `good`, `bad`, `warn`, `info`, `neutral`.
-- `accent` is a 6-digit hex color. Leave it out to use the default forest-green theme (moss, leaf and sage on a warm cream background, with a matching dark mode). Only set it if the user asks for another color.
+- `accent` is a 6-digit hex color. Leave it out to use the default calm moss theme (muted moss green, sage and warm stone on a soft off-white background, with a matching deep-pine dark mode). Only set it if the user asks for another color.
 - Pick section types that fit the content: `cards` for options, `steps` for a process, `compare` for trade-offs, `bars` for numbers, `list` for a checklist.
 - More block types (each is a section with a `type`):
   - `points`: bold lead plus detail, one row each. Best for summaries.
