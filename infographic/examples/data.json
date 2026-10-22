@@ -1,0 +1,36 @@
+{
+  "title": "Weekly traffic snapshot",
+  "subtitle": "Basic data: numbers, chart, bars and a table",
+  "accent": "#2563eb",
+  "tldr": "12,400 visits this week. Midweek was the busiest. Weekends were about half of the peak.",
+  "stats": [
+    {"value": "12.4k", "label": "visits"},
+    {"value": "Wed", "label": "busiest day"},
+    {"value": "4", "label": "pages tracked"}
+  ],
+  "sections": [
+    {"title": "Visits per day", "type": "chart", "items": [
+      {"label": "Mon", "value": 1800, "display": "1.8k"},
+      {"label": "Tue", "value": 2100, "display": "2.1k"},
+      {"label": "Wed", "value": 2300, "display": "2.3k"},
+      {"label": "Thu", "value": 2000, "display": "2.0k"},
+      {"label": "Fri", "value": 1700, "display": "1.7k"},
+      {"label": "Sat", "value": 1200, "display": "1.2k"},
+      {"label": "Sun", "value": 1300, "display": "1.3k"}
+    ]},
+    {"title": "Top pages", "type": "bars", "items": [
+      {"label": "/", "value": 4200, "display": "4,200"},
+      {"label": "/menu", "value": 3100, "display": "3,100"},
+      {"label": "/jobs", "value": 2200, "display": "2,200"},
+      {"label": "/about", "value": 1100, "display": "1,100"}
+    ]},
+    {"title": "Details", "type": "table", "columns": ["Page", "Visits", "Bounce", "Avg time"], "rows": [
+      ["/", "4,200", "38%", "1:42"],
+      ["/menu", "3,100", "41%", "1:15"],
+      ["/jobs", "2,200", "29%", "2:05"],
+      ["/about", "1,100", "52%", "0:48"]
+    ]}
+  ],
+  "callout": {"tone": "info", "title": "Read this", "text": "/about has the highest bounce rate. Look at it first."},
+  "footer": "Sample data for the template demo"
+}

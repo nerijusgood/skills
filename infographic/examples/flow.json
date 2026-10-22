@@ -1,0 +1,20 @@
+{
+  "title": "How a page reaches the browser",
+  "subtitle": "Step-by-step explanation with a flow",
+  "accent": "#7c3aed",
+  "sections": [
+    {"title": "The request path", "type": "flow", "items": [
+      {"title": "DNS", "text": "Turn the name into an address."},
+      {"title": "CDN edge", "text": "Nearby cache answers if it can.", "tone": "good"},
+      {"title": "Origin", "text": "Server builds the page if the cache missed.", "tone": "warn"},
+      {"title": "Response", "text": "HTML comes back to the browser."}
+    ]},
+    {"title": "Then, in the browser", "type": "steps", "items": [
+      {"title": "Parse the HTML", "text": "The browser reads it top to bottom."},
+      {"title": "Build the DOM and CSSOM", "text": "Structure and styles are matched up."},
+      {"title": "Layout and paint", "text": "Sizes are worked out, then pixels are drawn."},
+      {"title": "Run the JavaScript", "text": "The page becomes interactive."}
+    ]}
+  ],
+  "callout": {"tone": "good", "title": "Where speed comes from", "text": "Fewer round trips, smaller files, and caches close to the user."}
+}

@@ -53,7 +53,15 @@ All keys are optional except `title`.
 - `tone` is one of: `good`, `bad`, `warn`, `info`, `neutral`.
 - `accent` is a 6-digit hex color. Leave it out to use the default.
 - Pick section types that fit the content: `cards` for options, `steps` for a process, `compare` for trade-offs, `bars` for numbers, `list` for a checklist.
-- See `example.json` for a full sample.
+- More block types (each is a section with a `type`):
+  - `points`: bold lead plus detail, one row each. Best for summaries.
+  - `flow`: 2-5 boxes joined by arrows, for a process or request path. Use `steps` for longer sequences.
+  - `chart`: vertical columns, `items` of `label`, `value`, optional `display`. Best for a series like days or months.
+  - `table`: `columns` (list of names) and `rows` (list of lists). Number columns line up on the right.
+  - `list` with `"style": "todo"`: a checklist. Items are strings, or `{"text": "...", "done": true}`.
+- Pick the type from the content: summary = `tldr` + `points`; checklist = `list` todo; overview = `cards` (+ `table`); step explanation = `flow` + `steps`; data = `stats` + `chart` / `bars` + `table`.
+- Examples for each use case are in `examples/`: `summary.json`, `checklist.json`, `overview.json`, `data.json`, `flow.json`.
+- See `example.json` for a full sample. (older, short sample)
 
 ## Files
 

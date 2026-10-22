@@ -1,0 +1,18 @@
+{
+  "title": "Design tokens: the short version",
+  "subtitle": "Summary with key points",
+  "tldr": "Design tokens are named design decisions. You store them once and use them everywhere.",
+  "sections": [
+    {"title": "Key points", "type": "points", "items": [
+      {"title": "One source of truth", "text": "Colors, spacing and type live in one place. Code and design both read from it."},
+      {"title": "Names carry meaning", "text": "Use color-text-muted, not gray-500. The name says what it is for."},
+      {"title": "Two layers work best", "text": "Raw values first (primitives). Meaning on top (semantic tokens)."},
+      {"title": "Themes get cheap", "text": "Dark mode swaps the semantic layer. Components stay the same."}
+    ]},
+    {"title": "Primitive vs semantic", "type": "compare", "columns": [
+      {"title": "Primitive tokens", "tone": "neutral", "points": ["blue-600 = #2563eb", "space-4 = 16px", "Raw values, no meaning"]},
+      {"title": "Semantic tokens", "tone": "good", "points": ["color-action = blue-600", "gap-card = space-4", "Used by components"]}
+    ]}
+  ],
+  "callout": {"tone": "info", "title": "Start small", "text": "Begin with color, spacing, radius and type. Add more when you feel the pain."}
+}
