@@ -1,0 +1,44 @@
+{
+  "soccer_germany_bundesliga": [
+    {
+      "id": "ev1", "sport_key": "soccer_germany_bundesliga",
+      "commence_time": "2026-10-25T16:30:00Z",
+      "home_team": "SC Freiburg", "away_team": "Bayern Munich",
+      "bookmakers": [
+        {"key": "pinnacle", "title": "Pinnacle", "markets": [
+          {"key": "h2h", "outcomes": [
+            {"name": "SC Freiburg", "price": 6.20}, {"name": "Bayern Munich", "price": 1.46}, {"name": "Draw", "price": 5.30}]},
+          {"key": "totals", "outcomes": [
+            {"name": "Over", "price": 1.42, "point": 2.5}, {"name": "Under", "price": 2.95, "point": 2.5}]}
+        ]},
+        {"key": "mrgreen_se", "title": "Mr Green", "markets": [
+          {"key": "h2h", "outcomes": [
+            {"name": "SC Freiburg", "price": 6.80}, {"name": "Bayern Munich", "price": 1.40}, {"name": "Draw", "price": 4.90}]},
+          {"key": "totals", "outcomes": [
+            {"name": "Over", "price": 1.37, "point": 2.5}, {"name": "Under", "price": 3.15, "point": 2.5}]}
+        ]},
+        {"key": "betsson", "title": "Betsson", "markets": [
+          {"key": "h2h", "outcomes": [
+            {"name": "SC Freiburg", "price": 5.90}, {"name": "Bayern Munich", "price": 1.44}, {"name": "Draw", "price": 5.00}]}
+        ]}
+      ]
+    }
+  ],
+  "soccer_france_ligue_one": [
+    {
+      "id": "ev2", "sport_key": "soccer_france_ligue_one",
+      "commence_time": "2026-10-25T19:45:00Z",
+      "home_team": "Paris Saint Germain", "away_team": "Lyon",
+      "bookmakers": [
+        {"key": "pinnacle", "title": "Pinnacle", "markets": [
+          {"key": "h2h", "outcomes": [
+            {"name": "Paris Saint Germain", "price": 1.33}, {"name": "Lyon", "price": 9.00}, {"name": "Draw", "price": 5.60}]}
+        ]},
+        {"key": "unibet_se", "title": "Unibet", "markets": [
+          {"key": "h2h", "outcomes": [
+            {"name": "Paris Saint Germain", "price": 1.41}, {"name": "Lyon", "price": 6.00}, {"name": "Draw", "price": 4.60}]}
+        ]}
+      ]
+    }
+  ]
+}

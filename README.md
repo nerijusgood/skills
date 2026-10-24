@@ -5,6 +5,7 @@ My personal Claude skills. One folder per skill, each with a `SKILL.md`.
 | Skill | What it does |
 | --- | --- |
 | [`infographic`](infographic/) | Turns an answer into a calm, light, quick-scan HTML infographic with icons, doodles and avatars. Claude writes a small JSON, a script renders it. |
+| [`football-bets`](football-bets/) | Scans today's and tomorrow's football (top 5 leagues, CL, EL) for value bets, small longshots and strong favourites. Uses Pinnacle as the fair price via The Odds API. Needs a free API key in `~/.config/odds-api/key`. |
 
 ## Install
 

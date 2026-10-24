@@ -1,0 +1,13 @@
+{
+  "stake_main": 50,
+  "stake_longshot": 10,
+  "currency": "kr",
+  "min_edge": 0.03,
+  "longshot_min_odds": 4.0,
+  "longshot_min_edge": 0.05,
+  "main_odds_range": [1.30, 4.0],
+  "favourite_min_prob": 0.70,
+  "days": 2,
+  "timezone": "Europe/Copenhagen",
+  "markets": ["h2h", "totals"]
+}
