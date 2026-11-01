@@ -1,6 +1,6 @@
 # skills
 
-My personal Claude skills and plugins. One folder per skill (with a `SKILL.md`) or plugin (with `.claude-plugin/plugin.json`).
+Claude skills and plugins. One folder per skill (with a `SKILL.md`) or plugin (with `.claude-plugin/plugin.json`).
 
 | Skill | What it does |
 | --- | --- |
@@ -15,7 +15,7 @@ My personal Claude skills and plugins. One folder per skill (with a `SKILL.md`) 
 This repo is also a plugin marketplace (`nerijusgood`), listed in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
 
 ```bash
-claude plugin marketplace add ~/Projects/skills   # or: nerijusgood/skills
+claude plugin marketplace add nerijusgood/skills   # or a local clone path
 claude plugin install flights@nerijusgood
 ```
 
