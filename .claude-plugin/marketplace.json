@@ -1,0 +1,14 @@
+{
+  "name": "nerijusgood",
+  "description": "Claude plugins by nerijusgood",
+  "owner": {
+    "name": "nerijusgood"
+  },
+  "plugins": [
+    {
+      "name": "flights",
+      "source": "./flights",
+      "description": "Search and compare flight prices across Google Flights, Kiwi.com and Skiplagged"
+    }
+  ]
+}

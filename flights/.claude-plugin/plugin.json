@@ -1,0 +1,8 @@
+{
+  "name": "flights",
+  "version": "0.1.0",
+  "description": "Search and compare flight prices across Google Flights (via Fli), Kiwi.com and Skiplagged. No API keys needed.",
+  "author": {
+    "name": "nerijusgood"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "fli": {
+      "command": "uvx",
+      "args": ["--from", "flights[mcp]", "fli-mcp"],
+      "env": {
+        "FLI_MCP_DEFAULT_CURRENCY": "DKK"
+      }
+    },
+    "kiwi": {
+      "type": "http",
+      "url": "https://mcp.kiwi.com"
+    },
+    "skiplagged": {
+      "type": "http",
+      "url": "https://mcp.skiplagged.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "home_airport": "CPH",
+  "currency": "DKK",
+  "passengers": 1,
+  "cabin": "ECONOMY",
+  "max_results": 8,
+  "show_hidden_city": true
+}
