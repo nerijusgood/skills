@@ -1,0 +1,10 @@
+{
+  "timezone": "Europe/Copenhagen",
+  "country": "DK",
+  "hours_per_day": 8,
+  "day_start": "09:00",
+  "increment_minutes": 15,
+  "project_keys": ["GX"],
+  "in_progress_statuses": ["In Progress", "Code Review"],
+  "github_owner": "joeandthejuice"
+}

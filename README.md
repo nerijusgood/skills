@@ -7,6 +7,7 @@ Claude skills and plugins. One folder per skill (with a `SKILL.md`) or plugin (w
 | [`infographic`](infographic/) | Turns an answer into a calm, light, quick-scan HTML infographic with icons, doodles and avatars. Claude writes a small JSON, a script renders it. Optional interactive diagrams via [Archify](https://github.com/tt-a1i/archify). Content width scales up to ultra-wide screens. Three colour palettes, light/dark switch. |
 | [`flights`](flights/) (plugin) | Searches and compares flight prices across Google Flights (Fli), Kiwi.com and Skiplagged. Commands: `/flights:search`, `/flights:dates`, `/flights:anywhere`. No API keys. |
 | [`football-bets`](football-bets/) | Scans today's and tomorrow's football (top 5 leagues, CL, EL) for value bets, small longshots and strong favourites. Uses Pinnacle as the fair price via The Odds API. Needs a free API key in `~/.config/odds-api/key`. |
+| [`jira-worklog`](jira-worklog/) | Catches up Jira worklogs for a date range. Tuned for the Joe & The Juice Jira (GX project): drafts 8h/day across In Progress / Code Review tickets and GitHub PR activity, lets you edit, then submits with the `jira` CLI after confirmation. |
 
 ## Install
 
