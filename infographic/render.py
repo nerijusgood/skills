@@ -16,9 +16,10 @@ sys.path.insert(0, str(HERE))
 from doodles import DOODLES  # noqa: E402  (original doodles)
 from icons import ICONS  # noqa: E402  (Phosphor icons, MIT)
 
-DEFAULT_ACCENT = "#4d5f2b"  # calm olive moss
-DEFAULT_ACCENT_DARK = "#b7c48f"  # soft olive sage, used for the default accent in dark mode
+DEFAULT_ACCENT = "#3b4d1e"  # deep olive moss (9:1 on the card)
+DEFAULT_ACCENT_DARK = "#c4d28f"  # soft olive sage (10:1 on the dark card)
 TONES = {"good", "bad", "warn", "info", "neutral"}
+PALETTES = {"moss", "earthy", "berry"}
 NUM = re.compile(
     r"^[~<>≈$€£+\-−]?\s*\d[\d.,]*(:\d{2})?\s*(%|x|k|m|ms|s|kb|mb|gb)?$",
     re.I,
@@ -29,8 +30,18 @@ ARROW = (
     'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 )
 
+MAX_DIAGRAM_BYTES = 8 * 1024 * 1024
+# Lets the page's theme switch drive the embedded Archify page (its html[data-theme]).
+THEME_BRIDGE = (
+    "<script>(function(){var d=document.documentElement;"
+    "window.addEventListener('message',function(e){if(e.source!==parent||!e.data)return;"
+    "var t=e.data.igTheme;if(t==='light'||t==='dark')d.setAttribute('data-theme',t);});"
+    "try{parent.postMessage({igReady:1},'*');}catch(_){}})();</script>"
+)
+
 _AVATARS = None
 _USED_AVATARS = set()
+_BASE_DIR = Path.cwd()
 
 
 def e(value):
@@ -257,7 +268,47 @@ def callout_html(c):
     )
 
 
+def diagram_html(sec):
+    """Embed a finished Archify page (one standalone HTML file) in a sandboxed frame.
+
+    Missing or unreadable file: render `fallback` (a normal section) if given, else nothing.
+    """
+    src = sec.get("src")
+    page = None
+    if src:
+        path = Path(src)
+        path = path if path.is_absolute() else _BASE_DIR / path
+        try:
+            if path.stat().st_size > MAX_DIAGRAM_BYTES:
+                print("warning: diagram %s is over 8 MB, skipped" % src, file=sys.stderr)
+            else:
+                page = path.read_text(encoding="utf-8")
+                if "<html" not in page[:2000].lower() and "<!doctype" not in page[:200].lower():
+                    print("warning: diagram %s is not an HTML page, skipped" % src, file=sys.stderr)
+                    page = None
+        except OSError as err:
+            print("warning: diagram %s not readable (%s)" % (src, err.strerror), file=sys.stderr)
+    if page is None:
+        fb = sec.get("fallback")
+        if isinstance(fb, dict) and fb.get("type") not in (None, "diagram"):
+            return RENDERERS[fb["type"]](fb) if fb["type"] in RENDERERS else ""
+        return ""
+    page = re.sub(r"<head(?:\s[^>]*)?>", lambda m: m.group(0) + THEME_BRIDGE, page, count=1, flags=re.I)
+    height = int(num(sec.get("height")))
+    style = ' style="--h:%dpx"' % max(280, min(1200, height)) if height else ""
+    return (
+        '<figure class="diagram"%s>'
+        '<iframe title="%s" sandbox="allow-scripts allow-downloads" allow="fullscreen" allowfullscreen '
+        'loading="lazy" srcdoc="%s"></iframe>'
+        '<figcaption class="diagram-foot"><span>%s</span>'
+        '<button type="button" class="diagram-open" data-open hidden>Open full size</button>'
+        '</figcaption></figure>'
+        % (style, e(sec.get("title") or "Diagram"), e(page), e(sec.get("caption", "")))
+    )
+
+
 RENDERERS = {
+    "diagram": diagram_html,
     "cards": cards_html,
     "points": points_html,
     "people": people_html,
@@ -279,13 +330,16 @@ def section_html(sec):
     if fn is None:
         print("warning: unknown section type %r skipped" % kind, file=sys.stderr)
         return ""
+    body = fn(sec)
+    if not body:
+        return ""
     heading = ""
     if sec.get("title"):
         heading = '<div class="h2row"><h2>%s</h2>%s</div>' % (
             e(sec["title"]),
             doodle_html(sec.get("doodle"), "doodle-sm"),
         )
-    return '<section class="block">%s%s</section>' % (heading, fn(sec))
+    return '<section class="block">%s%s</section>' % (heading, body)
 
 
 def build_body(data):
@@ -305,8 +359,17 @@ def build_body(data):
     return "\n".join(p for p in parts if p)
 
 
-def render(data):
+def render(data, base_dir=None):
+    global _BASE_DIR
+    _BASE_DIR = Path(base_dir) if base_dir else Path.cwd()
     _USED_AVATARS.clear()
+    palette = data.get("palette", "moss")
+    if palette not in PALETTES:
+        print("warning: unknown palette %r, using moss" % palette, file=sys.stderr)
+        palette = "moss"
+    lang = str(data.get("lang", "en"))
+    if not re.fullmatch(r"[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*", lang):
+        lang = "en"
     accent = str(data.get("accent", DEFAULT_ACCENT))
     if not re.fullmatch(r"#[0-9a-fA-F]{6}", accent):
         accent = DEFAULT_ACCENT
@@ -317,7 +380,9 @@ def render(data):
     body = build_body(data)
     template = (HERE / "template.html").read_text(encoding="utf-8")
     return (
-        template.replace("{{TITLE}}", e(data.get("title", "Summary")))
+        template.replace("{{LANG}}", lang)
+        .replace("{{PALETTE}}", palette)
+        .replace("{{TITLE}}", e(data.get("title", "Summary")))
         .replace("{{ACCENT_DARK}}", accent_dark)
         .replace("{{ACCENT}}", accent)
         .replace("{{BODY}}", body)
@@ -330,8 +395,9 @@ def main(argv):
         return 2
     raw = sys.stdin.read() if argv[1] == "-" else Path(argv[1]).read_text(encoding="utf-8")
     data = json.loads(raw)
+    base = Path.cwd() if argv[1] == "-" else Path(argv[1]).resolve().parent
     out = Path(argv[2] if len(argv) > 2 else "infographic.html")
-    out.write_text(render(data), encoding="utf-8")
+    out.write_text(render(data, base), encoding="utf-8")
     print(out.resolve())
     return 0
 

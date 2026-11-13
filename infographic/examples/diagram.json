@@ -1,0 +1,46 @@
+{
+  "title": "From question to page",
+  "subtitle": "A diagram drawn by Archify, inside the infographic",
+  "doodle": "rocket",
+  "lang": "en",
+  "tldr": "Ask once. Claude writes a short JSON. A script builds one page.",
+  "stats": [
+    {"value": "2", "label": "ways to draw a flow", "icon": "flow-arrow"},
+    {"value": "1 file", "label": "page you open or share", "icon": "file-text"},
+    {"value": "0", "label": "installs forced on you", "icon": "shield-check"}
+  ],
+  "sections": [
+    {
+      "title": "The path",
+      "type": "diagram",
+      "src": "diagram.html",
+      "caption": "Interactive: drag to pan, scroll to zoom, click a step to focus it.",
+      "fallback": {
+        "type": "flow",
+        "items": [
+          {"title": "Ask", "text": "Say \"infographic this\"."},
+          {"title": "Write JSON", "text": "Short, plain words.", "tone": "good"},
+          {"title": "Render", "text": "One HTML page."}
+        ]
+      }
+    },
+    {
+      "title": "When to use a diagram",
+      "type": "compare",
+      "columns": [
+        {"title": "Use it for", "tone": "good", "points": ["Parts and how they connect", "Steps with branches", "Who talks to whom, in order", "States and data models"]},
+        {"title": "Skip it for", "tone": "warn", "points": ["Plain summaries", "Numbers and rankings", "Checklists"]}
+      ]
+    },
+    {
+      "title": "Without Archify",
+      "type": "points",
+      "items": [
+        {"title": "Nothing breaks", "text": "The page renders, with the built-in flow block as the fallback.", "icon": "shield-check"},
+        {"title": "Nothing installs by itself", "text": "Claude only tells you how, once.", "icon": "lock"}
+      ]
+    }
+  ],
+  "callout": {"tone": "info", "icon": "lightbulb", "title": "Tip", "text": "Delete diagram.html and render again to see the fallback."},
+  "footer": "Diagram: Archify (Apache-2.0)"
+}
