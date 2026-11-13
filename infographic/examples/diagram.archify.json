@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "From question to page",
+    "quality_profile": "showcase",
+    "output": "diagram.html"
+  },
+  "lanes": [
+    { "id": "you", "label": "You" },
+    { "id": "claude", "label": "Claude" },
+    { "id": "tools", "label": "Scripts" }
+  ],
+  "mainPath": ["ask", "pick", "json", "archify", "render", "page"],
+  "nodes": [
+    { "id": "ask", "lane": "you", "col": 0, "type": "external", "label": "Ask", "sublabel": "infographic this" },
+    { "id": "pick", "lane": "claude", "col": 1, "type": "backend", "label": "Pick blocks", "sublabel": "text or diagram" },
+    { "id": "json", "lane": "claude", "col": 2, "type": "backend", "label": "Write JSON", "sublabel": "short, plain words" },
+    { "id": "archify", "lane": "tools", "col": 3, "type": "messagebus", "label": "Archify", "sublabel": "draws the diagram" },
+    { "id": "flow", "lane": "tools", "col": 2, "type": "database", "label": "Flow block", "sublabel": "no Archify needed" },
+    { "id": "render", "lane": "tools", "col": 4, "type": "backend", "label": "render.py", "sublabel": "builds the page" },
+    { "id": "page", "lane": "you", "col": 5, "type": "frontend", "label": "One HTML page", "sublabel": "open or share" }
+  ],
+  "edges": [
+    { "id": "e1", "from": "ask", "to": "pick", "variant": "default" },
+    { "id": "e2", "from": "pick", "to": "json", "variant": "default" },
+    { "id": "e3", "from": "json", "to": "archify", "label": "if installed", "variant": "emphasis" },
+    { "id": "e4", "from": "json", "to": "flow", "label": "if not", "variant": "dashed", "role": "branch" },
+    { "id": "e5", "from": "archify", "to": "render", "label": "diagram.html", "variant": "emphasis" },
+    { "id": "e6", "from": "flow", "to": "render", "variant": "dashed", "role": "branch" },
+    { "id": "e7", "from": "render", "to": "page", "variant": "emphasis" }
+  ]
+}

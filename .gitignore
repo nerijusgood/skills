@@ -4,3 +4,6 @@ infographic.html
 __pycache__/
 .odds_api_key
 .env
+
+infographic/examples/diagram.html
+infographic/examples/demo.html
